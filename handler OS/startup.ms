@@ -6,18 +6,21 @@ end for
 
 text.install 0
 
-import "mainInt"
-import "startInt"
+import "objectModules"
+import "autoReboot"
 
-desktop = new mainInt.desktop
-start_background = new startInt.start
+desktop = new objectModules.desktop
 
 desktop.load
 
+autoReboot.grabMsFiles file.curdir
+
 while true
+	autoReboot.checkForUpdates file.curdir
 	for i in desktop.sprite_layer.sprites
 		if i.contains(mouse) and mouse.button then
-			i.loadMenu(start_background)
+
+			i.loadMenu(objectModules.start, desktop)
 		end if
 	end for
 	yield
